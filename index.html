@@ -77,14 +77,34 @@ section p{color:var(--muted);margin:0 0 10px;max-width:40em}
 .video .play::after{content:"";margin-left:6px;border-style:solid;border-width:14px 0 14px 22px;
   border-color:transparent transparent transparent #fff}
 .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.notice{display:flex;gap:10px;align-items:flex-start;background:var(--chip);color:var(--text);
+  border-radius:14px;padding:12px 14px;margin:0 0 16px;font-size:.95rem}
+.notice b{color:var(--accent)}
+.btn.disabled{background:var(--line);color:var(--muted);pointer-events:none}
+.road{list-style:none;margin:16px 0 0;padding:0;position:relative}
+.road li{position:relative;padding:0 0 22px 34px}
+.road li::before{content:"";position:absolute;left:8px;top:22px;bottom:-4px;width:2px;background:var(--line)}
+.road li:last-child::before{display:none}
+.road .dot{position:absolute;left:0;top:4px;width:18px;height:18px;border-radius:50%;
+  border:2px solid var(--line);background:var(--bg)}
+.road .done .dot{background:var(--accent);border-color:var(--accent)}
+.road .now .dot{border-color:var(--accent);box-shadow:0 0 0 4px var(--chip)}
+.road h4{margin:0;font-size:1.05rem}
+.road .status{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);margin-left:8px}
+.road .done .status,.road .now .status{color:var(--accent)}
+.road p{margin:4px 0 0;color:var(--muted);font-size:.95rem;max-width:44em}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px 28px}
 .panel ol{margin:8px 0 0;padding-left:20px;color:var(--muted)}
 .panel li{margin:4px 0}
+.small-note{font-size:.9rem}
 footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0 40px;color:var(--muted);font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
 footer a{color:var(--muted)}
 @media (max-width:720px){
-  nav a{margin-left:14px}
+  header .wrap{flex-wrap:wrap;gap:8px 16px}
+  nav{white-space:normal;display:flex;flex-wrap:wrap;gap:4px 16px}
+  nav a{margin-left:0}
   .hero{grid-template-columns:1fr;padding:24px 0 32px;gap:28px}
   .hero .mark{width:min(220px,60vw);border-radius:28px;order:-1;justify-self:start}
   .card{grid-template-columns:1fr;padding:22px}
@@ -97,7 +117,7 @@ footer a{color:var(--muted)}
 <header>
   <div class="wrap">
     <a class="brand" href="/"><img src="brand/logo.png" alt="" width="36" height="36">Leon <span>Digital</span></a>
-    <nav><a href="#apps">Apps</a><a href="feedback.html">Feedback</a><a href="#contact">Contact</a></nav>
+    <nav><a href="#apps">Apps</a><a href="#roadmap">Roadmap</a><a href="feedback.html">Feedback</a><a href="#contact">Contact</a></nav>
   </div>
 </header>
 
@@ -118,8 +138,12 @@ footer a{color:var(--muted)}
       <h2>Doc Gen</h2>
       <span class="tag">Android · Made for Malaysia</span>
       <p>Create professional quotations, invoices and receipts on your phone, share them as PDF, and keep track of who has paid. Built for freelancers and small businesses, with SST, SSM and TIN fields ready.</p>
+      <div class="notice"><span>&#9432;</span><span><b>Coming soon to Google Play.</b>
+        Doc Gen is in closed testing, so the Play Store page only opens for invited testers.
+        It will be available to everyone after the test.</span></div>
       <div class="actions">
-        <a class="btn" href="https://play.google.com/store/apps/details?id=com.leondigital.docgen">Get it on Google Play</a>
+        <a class="btn" href="mailto:support@leondigital.fyi?subject=Join%20the%20Doc%20Gen%20test&body=Hi%2C%20I%27d%20like%20to%20join%20the%20Doc%20Gen%20test.%0A%0AMy%20Google%20Play%20email%3A%20">Join the test</a>
+        <span class="btn disabled" aria-disabled="true" title="Available after testing">Google Play: coming soon</span>
         <a class="link" href="#video">Watch the video</a>
         <a class="link" href="feedback.html">Send feedback</a>
       </div>
@@ -150,10 +174,39 @@ footer a{color:var(--muted)}
       <p>We are looking for people who send quotations or invoices to try Doc Gen before its public release.</p>
       <ol>
         <li>You need an Android phone and can stay in the test for 14 days.</li>
-        <li>Email <a href="mailto:support@leondigital.fyi?subject=Doc%20Gen%20tester">support@leondigital.fyi</a> with the email address you use for Google Play.</li>
+        <li><a href="mailto:support@leondigital.fyi?subject=Join%20the%20Doc%20Gen%20test&body=Hi%2C%20I%27d%20like%20to%20join%20the%20Doc%20Gen%20test.%0A%0AMy%20Google%20Play%20email%3A%20">Email support@leondigital.fyi</a> with the email address you use for Google Play.</li>
         <li>We add you and send the test link.</li>
       </ol>
     </div>
+  </section>
+
+  <section id="roadmap">
+    <h3>Roadmap</h3>
+    <p>Where Doc Gen is today and what comes next.</p>
+    <ul class="road">
+      <li class="done"><span class="dot"></span>
+        <h4>Core app<span class="status">Done</span></h4>
+        <p>Quotations, invoices, receipts, credit, debit and refund notes; payments; PDF sharing; backup and restore; Malaysian SST, SSM and TIN fields.</p></li>
+      <li class="done"><span class="dot"></span>
+        <h4>Accounts and upgrades<span class="status">Done</span></h4>
+        <p>Optional sign-in, Remove Ads, premium document designs, payment reminders and bank or DuitNow details on invoices.</p></li>
+      <li class="now"><span class="dot"></span>
+        <h4>Closed testing<span class="status">Now</span></h4>
+        <p>Testers use Doc Gen for two weeks and tell us what to improve.</p></li>
+      <li><span class="dot"></span>
+        <h4>Public release on Google Play<span class="status">Next</span></h4>
+        <p>Doc Gen for everyone on Android, free with ads.</p></li>
+      <li><span class="dot"></span>
+        <h4>Doc Gen Pro<span class="status">Planned</span></h4>
+        <p>A subscription with multiple businesses, cloud backup and sync between phones, sales and tax reports, recurring invoices and your own document designs.</p></li>
+      <li><span class="dot"></span>
+        <h4>Web app<span class="status">Planned</span></h4>
+        <p>Use Doc Gen in your browser, with the same documents as your phone (with Pro sync).</p></li>
+      <li><span class="dot"></span>
+        <h4>iPhone<span class="status">Planned</span></h4>
+        <p>Doc Gen on iOS, with your account, purchases and documents.</p></li>
+    </ul>
+    <p class="small-note">Plans can change. Tell us what matters most to you on the <a href="feedback.html">feedback page</a>.</p>
   </section>
 
   <section id="contact">
