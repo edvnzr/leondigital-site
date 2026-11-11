@@ -67,6 +67,19 @@ nav a:hover{color:var(--text)}
 section{padding:44px 0 0}
 section h3{font-size:1.35rem;margin:0 0 10px;letter-spacing:-.01em}
 section p{color:var(--muted);margin:0 0 10px;max-width:40em}
+.video{position:relative;aspect-ratio:16/9;border-radius:20px;overflow:hidden;
+  background:#000;border:1px solid var(--line);max-width:760px}
+.video button{all:unset;cursor:pointer;position:absolute;inset:0;display:block}
+.video img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}
+.video .play{position:absolute;left:50%;top:50%;width:72px;height:72px;margin:-36px 0 0 -36px;
+  border-radius:50%;background:var(--accent);display:grid;place-items:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.video .play::after{content:"";margin-left:6px;border-style:solid;border-width:14px 0 14px 22px;
+  border-color:transparent transparent transparent #fff}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px 28px}
+.panel ol{margin:8px 0 0;padding-left:20px;color:var(--muted)}
+.panel li{margin:4px 0}
 footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0 40px;color:var(--muted);font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
 footer a{color:var(--muted)}
@@ -84,7 +97,7 @@ footer a{color:var(--muted)}
 <header>
   <div class="wrap">
     <a class="brand" href="/"><img src="brand/logo.png" alt="" width="36" height="36">Leon <span>Digital</span></a>
-    <nav><a href="#apps">Apps</a><a href="#contact">Contact</a></nav>
+    <nav><a href="#apps">Apps</a><a href="feedback.html">Feedback</a><a href="#contact">Contact</a></nav>
   </div>
 </header>
 
@@ -107,8 +120,8 @@ footer a{color:var(--muted)}
       <p>Create professional quotations, invoices and receipts on your phone, share them as PDF, and keep track of who has paid. Built for freelancers and small businesses, with SST, SSM and TIN fields ready.</p>
       <div class="actions">
         <a class="btn" href="https://play.google.com/store/apps/details?id=com.leondigital.docgen">Get it on Google Play</a>
-        <a class="link" href="https://docgen.leondigital.fyi/privacy.html">Privacy policy</a>
-        <a class="link" href="https://docgen.leondigital.fyi/delete-account.html">Delete your account</a>
+        <a class="link" href="#video">Watch the video</a>
+        <a class="link" href="feedback.html">Send feedback</a>
       </div>
     </div>
   </div>
@@ -120,17 +133,54 @@ footer a{color:var(--muted)}
     <li><b>Looks professional</b><span>Your logo, bank and DuitNow details, and a choice of clean document designs.</span></li>
   </ul>
 
+  <section id="video">
+    <h3>See Doc Gen in action</h3>
+    <p>From a quotation to an invoice, a payment and a receipt, in a few minutes.</p>
+    <div class="video" id="player">
+      <button type="button" aria-label="Play the Doc Gen video" onclick="playVideo()">
+        <img src="https://i.ytimg.com/vi/8ahYI_NWJHg/hqdefault.jpg" alt="" loading="lazy">
+        <span class="play"></span>
+      </button>
+    </div>
+  </section>
+
+  <section id="test">
+    <div class="panel">
+      <h3>Help test Doc Gen</h3>
+      <p>We are looking for people who send quotations or invoices to try Doc Gen before its public release.</p>
+      <ol>
+        <li>You need an Android phone and can stay in the test for 14 days.</li>
+        <li>Email <a href="mailto:support@leondigital.fyi?subject=Doc%20Gen%20tester">support@leondigital.fyi</a> with the email address you use for Google Play.</li>
+        <li>We add you and send the test link.</li>
+      </ol>
+    </div>
+  </section>
+
   <section id="contact">
     <h3>Contact</h3>
-    <p>Questions, feedback or support: <a href="mailto:support@leondigital.fyi">support@leondigital.fyi</a></p>
+    <p>Questions or support: <a href="mailto:support@leondigital.fyi">support@leondigital.fyi</a>. Ideas or problems with Doc Gen: <a href="feedback.html">send feedback</a>.</p>
   </section>
 </main>
 
 <footer>
   <div class="wrap">
     <span>© 2026 Leon Digital</span>
-    <span><a href="https://docgen.leondigital.fyi/privacy.html">Doc Gen privacy policy</a></span>
+    <span><a href="feedback.html">Feedback</a> · <a href="https://docgen.leondigital.fyi/privacy.html">Doc Gen privacy policy</a> · <a href="https://docgen.leondigital.fyi/delete-account.html">Delete your Doc Gen account</a></span>
   </div>
 </footer>
+<script>
+// The YouTube player (privacy-enhanced, no cookies until played) loads
+// only when the visitor presses play.
+function playVideo() {
+  var f = document.createElement('iframe');
+  f.src = 'https://www.youtube-nocookie.com/embed/8ahYI_NWJHg?autoplay=1&rel=0';
+  f.title = 'Doc Gen video';
+  f.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture';
+  f.allowFullscreen = true;
+  var p = document.getElementById('player');
+  p.innerHTML = '';
+  p.appendChild(f);
+}
+</script>
 </body>
 </html>
