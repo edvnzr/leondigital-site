@@ -98,6 +98,22 @@ section p{color:var(--muted);margin:0 0 10px;max-width:40em}
 .panel ol{margin:8px 0 0;padding-left:20px;color:var(--muted)}
 .panel li{margin:4px 0}
 .small-note{font-size:.9rem}
+.steps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:18px 0 6px}
+.step{display:flex;gap:14px;border:1px solid var(--line);border-radius:18px;padding:18px}
+.step .num{flex:none;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;
+  display:grid;place-items:center;font-weight:800}
+.step p{margin:4px 0 12px;font-size:.95rem}
+.alt{margin-top:14px}
+.alt summary{cursor:pointer;color:var(--accent);font-weight:600}
+.alt form{margin-top:12px;max-width:420px}
+.alt label{display:block;font-weight:600;margin:0 0 6px}
+.alt .hint{font-weight:400;color:var(--muted)}
+.alt input{width:100%;font:inherit;color:var(--text);background:transparent;border:1px solid var(--line);
+  border-radius:12px;padding:11px 14px;margin:0 0 14px}
+.alt button{border:0;cursor:pointer;font:inherit}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#t-status.ok{color:#1B7F4B} #t-status.error{color:#C62828}
+@media (max-width:720px){ .steps{grid-template-columns:1fr} }
 footer{border-top:1px solid var(--line);margin-top:56px;padding:24px 0 40px;color:var(--muted);font-size:.9rem}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between}
 footer a{color:var(--muted)}
@@ -142,7 +158,7 @@ footer a{color:var(--muted)}
         Doc Gen is in closed testing, so the Play Store page only opens for invited testers.
         It will be available to everyone after the test.</span></div>
       <div class="actions">
-        <a class="btn" href="mailto:support@leondigital.fyi?subject=Join%20the%20Doc%20Gen%20test&body=Hi%2C%20I%27d%20like%20to%20join%20the%20Doc%20Gen%20test.%0A%0AMy%20Google%20Play%20email%3A%20">Join the test</a>
+        <a class="btn" href="#test">Join the test</a>
         <span class="btn disabled" aria-disabled="true" title="Available after testing">Google Play: coming soon</span>
         <a class="link" href="#video">Watch the video</a>
         <a class="link" href="feedback.html">Send feedback</a>
@@ -170,13 +186,36 @@ footer a{color:var(--muted)}
 
   <section id="test">
     <div class="panel">
-      <h3>Help test Doc Gen</h3>
-      <p>We are looking for people who send quotations or invoices to try Doc Gen before its public release.</p>
-      <ol>
-        <li>You need an Android phone and can stay in the test for 14 days.</li>
-        <li><a href="mailto:support@leondigital.fyi?subject=Join%20the%20Doc%20Gen%20test&body=Hi%2C%20I%27d%20like%20to%20join%20the%20Doc%20Gen%20test.%0A%0AMy%20Google%20Play%20email%3A%20">Email support@leondigital.fyi</a> with the email address you use for Google Play.</li>
-        <li>We add you and send the test link.</li>
-      </ol>
+      <h3>Join the Doc Gen test</h3>
+      <p>Help shape Doc Gen before its public release. You need an Android phone and can stay in the test for 14 days. It takes about a minute.</p>
+      <div class="steps">
+        <div class="step">
+          <span class="num">1</span>
+          <div><b>Join the tester group</b>
+            <p>Sign in with the Google account you use on Google Play, then tap <b>Join group</b>.</p>
+            <a class="btn" href="https://groups.google.com/g/doc-gen-testers" target="_blank" rel="noopener">Join the group</a></div>
+        </div>
+        <div class="step">
+          <span class="num">2</span>
+          <div><b>Get the app</b>
+            <p>Open this on your Android phone, tap <b>Become a tester</b>, then install Doc Gen from Google Play.</p>
+            <a class="btn ghost" href="https://play.google.com/apps/testing/com.leondigital.docgen" target="_blank" rel="noopener">Become a tester</a></div>
+        </div>
+      </div>
+
+      <details class="alt">
+        <summary>Having trouble? Send us your Google Play email instead</summary>
+        <form id="tester" novalidate>
+          <label for="t-email">Google Play email</label>
+          <input id="t-email" type="email" autocomplete="email" maxlength="200" required placeholder="you@gmail.com">
+          <label for="t-name">Name <span class="hint">(optional)</span></label>
+          <input id="t-name" autocomplete="name" maxlength="100">
+          <div class="hp" aria-hidden="true"><input id="t-website" tabindex="-1" autocomplete="off"></div>
+          <button type="submit" class="btn" id="t-send">Send</button>
+          <p id="t-status" role="status"></p>
+        </form>
+        <p class="small-note">We add you within a day and email you the test link. Your email is only used for the test.</p>
+      </details>
     </div>
   </section>
 
@@ -192,7 +231,7 @@ footer a{color:var(--muted)}
         <p>Optional sign-in, Remove Ads, premium document designs, payment reminders and bank or DuitNow details on invoices.</p></li>
       <li class="now"><span class="dot"></span>
         <h4>Closed testing<span class="status">Now</span></h4>
-        <p>Testers use Doc Gen for two weeks and tell us what to improve.</p></li>
+        <p>Testers use Doc Gen for two weeks and tell us what to improve. <a href="#test">Join the test</a>.</p></li>
       <li><span class="dot"></span>
         <h4>Public release on Google Play<span class="status">Next</span></h4>
         <p>Doc Gen for everyone on Android, free with ads.</p></li>
@@ -234,6 +273,34 @@ function playVideo() {
   p.innerHTML = '';
   p.appendChild(f);
 }
+
+(function () {
+  var form = document.getElementById('tester');
+  if (!form) return;
+  var status = document.getElementById('t-status');
+  var send = document.getElementById('t-send');
+  function say(t, k) { status.textContent = t; status.className = k || ''; }
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var email = document.getElementById('t-email').value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      say('Please enter your Google Play email address.', 'error'); return;
+    }
+    send.disabled = true; say('Sending…');
+    try {
+      var r = await fetch('https://cvzzxbxkymdlmmhyyqlq.supabase.co/functions/v1/feedback', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kind: 'tester', source: 'web', email: email,
+          name: document.getElementById('t-name').value.trim(),
+          website: document.getElementById('t-website').value })
+      });
+      if (r.ok) { form.reset(); say('Thank you! We will email you the test link soon.', 'ok'); }
+      else if (r.status === 429) { say('Too many requests for now. Please try again later.', 'error'); }
+      else { say('Could not send. Please try again later.', 'error'); }
+    } catch (err) { say('Could not send. Check your connection and try again.', 'error'); }
+    finally { send.disabled = false; }
+  });
+})();
 </script>
 </body>
 </html>
